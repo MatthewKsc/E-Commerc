@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.dao.Entities
-{
+namespace Core.Entities{
     public class Product
     {
         public int Id { get; set; }

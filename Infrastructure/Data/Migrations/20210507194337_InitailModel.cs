@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace API.Migrations
-{
+namespace Infrastructure.Data.Migrations{
     public partial class InitailModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
