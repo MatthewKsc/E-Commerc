@@ -30,6 +30,8 @@ namespace API {
 
             services.AddScoped<IProductRepository, ProductRepository>();
 
+            services.AddScoped<StoreContextSeed>();
+
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -40,7 +42,10 @@ namespace API {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, StoreContextSeed seeder) {
+
+            seeder.Seed();
+
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
