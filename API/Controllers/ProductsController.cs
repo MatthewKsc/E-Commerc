@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿using Core.Entities;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,16 @@ namespace API.Controllers
     public class ProductsController : ControllerBase
     {
         
-        private readonly IProductRepository repo;
+        private readonly IGenericRepository<Product> productsRepo;
 
-        public ProductsController(IProductRepository repo) {
-            this.repo = repo;
+        public ProductsController(IGenericRepository<Product> productsRepo) {
+            this.productsRepo = productsRepo;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetProducts() {
 
-            var result = await repo.GetProductsAsync();
+            var result = await productsRepo.GetListAsync();
 
             return Ok(result);
         }
@@ -30,7 +31,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetProduct([FromRoute] int id) {
 
-            var result = await repo.GetProductByIdAsync(id);
+            var result = await productsRepo.GetByIdAsync(id);
 
             return Ok(result);
         }
