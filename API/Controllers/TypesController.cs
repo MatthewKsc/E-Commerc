@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,10 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetTypes() {
-            var result = await typeRepo.GetListAsync();
+
+            var spec = new BaseSpecification<ProductType>();
+
+            var result = await typeRepo.GetListWithSpec(spec);
 
             return Ok(result);
         }

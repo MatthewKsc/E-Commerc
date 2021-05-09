@@ -26,7 +26,7 @@ namespace API.Controllers
 
             var spec = new ProductWithTypesAndBrandSpecification();
 
-            var result = await productsRepo.GetList(spec);
+            var result = await productsRepo.GetListWithSpec(spec);
 
             return Ok(result);
         }

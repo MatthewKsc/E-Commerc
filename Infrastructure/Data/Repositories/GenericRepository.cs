@@ -32,7 +32,7 @@ namespace Infrastructure.Data.Repositories
             return await ApplySpecification(specification).SingleOrDefaultAsync();
         }
 
-        public async Task<IReadOnlyList<T>> GetList(ISpecification<T> specification) {
+        public async Task<IReadOnlyList<T>> GetListWithSpec(ISpecification<T> specification) {
             return await ApplySpecification(specification).ToListAsync();
         }
 

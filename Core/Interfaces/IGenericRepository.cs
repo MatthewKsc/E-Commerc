@@ -14,7 +14,7 @@ namespace Core.Interfaces
         Task<IReadOnlyList<T>> GetListAsync();
 
         Task<T> GetEntityWithSpec(ISpecification<T> specification);
-        Task<IReadOnlyList<T>> GetList(ISpecification<T> specification);
+        Task<IReadOnlyList<T>> GetListWithSpec(ISpecification<T> specification);
 
     }
 }
