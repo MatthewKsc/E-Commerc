@@ -33,6 +33,7 @@ namespace API {
 
 
             services.AddScoped<StoreContextSeed>();
+            services.AddAutoMapper(this.GetType().Assembly);
 
             services.AddControllers();
             services.AddSwaggerGen(c => {

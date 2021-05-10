@@ -1,4 +1,6 @@
-﻿using Core.Entities;
+﻿using API.Dtos;
+using AutoMapper;
+using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +16,11 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        
+        private readonly IMapper mapper;
         private readonly IGenericRepository<Product> productsRepo;
 
-        public ProductsController(IGenericRepository<Product> productsRepo) {
+        public ProductsController(IGenericRepository<Product> productsRepo, IMapper mapper) {
+            this.mapper = mapper;
             this.productsRepo = productsRepo;
         }
 
@@ -36,7 +39,9 @@ namespace API.Controllers
 
             var spec = new ProductWithTypesAndBrandSpecification(id);
 
-            var result = await productsRepo.GetEntityWithSpec(spec);
+            var product = await productsRepo.GetEntityWithSpec(spec);
+
+            var result = mapper.Map<ProductDTO>(product);
 
             return Ok(result);
         }
