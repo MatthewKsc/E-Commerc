@@ -29,7 +29,9 @@ namespace API.Controllers
 
             var spec = new ProductWithTypesAndBrandSpecification();
 
-            var result = await productsRepo.GetListWithSpec(spec);
+            var products = await productsRepo.GetListWithSpec(spec);
+
+            var result = mapper.Map<IReadOnlyList<ProductDTO>>(products);
 
             return Ok(result);
         }
