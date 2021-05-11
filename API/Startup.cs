@@ -13,10 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
-using Infrastructure.Data.Repositories;
-using Core.Interfaces;
 using API.Middleware;
-using API.Exceptions;
 
 namespace API {
     public class Startup {
@@ -29,30 +26,12 @@ namespace API {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-
             services.AddScoped<StoreContextSeed>();
             services.AddAutoMapper(this.GetType().Assembly);
 
             services.AddControllers();
 
-            services.Configure<ApiBehaviorOptions>(options => {
-                options.InvalidModelStateResponseFactory = actionContext => {
-
-                    var errors = actionContext.ModelState
-                    .Where(e => e.Value.Errors.Count > 0)
-                    .SelectMany(x => x.Value.Errors)
-                    .Select(x => x.ErrorMessage).ToArray();
-
-                    var errorResponse = new ApiValidationErrorResponse {
-                        Errors = errors
-                    };
-
-                    return new BadRequestObjectResult(errorResponse);
-                };
-            });
+            services.AddServicesToApi();
 
             services.AddDbContext<StoreContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
