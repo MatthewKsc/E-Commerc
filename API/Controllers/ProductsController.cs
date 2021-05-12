@@ -28,9 +28,9 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetProducts() {
+        public async Task<ActionResult> GetProducts([FromQuery] string sort) {
 
-            var spec = new ProductWithTypesAndBrandSpecification();
+            var spec = new ProductWithTypesAndBrandSpecification(sort);
 
             var products = await productsRepo.GetListWithSpec(spec);
 
