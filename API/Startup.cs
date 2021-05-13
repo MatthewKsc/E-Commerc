@@ -19,6 +19,7 @@ namespace API {
     public class Startup {
 
         private readonly IConfiguration Configuration;
+        private readonly string CorsPolicyName = "CorsPolicy";
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
@@ -32,6 +33,12 @@ namespace API {
             services.AddControllers();
 
             services.AddServicesToApi();
+
+            services.AddCors(option =>
+                option.AddPolicy(CorsPolicyName, policy =>{
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(Configuration["FrontEndClient"]);
+                })
+            );
 
             services.AddDbContext<StoreContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -59,6 +66,8 @@ namespace API {
 
             app.UseRouting();
             app.UseStaticFiles();
+
+            app.UseCors(CorsPolicyName);
 
             app.UseAuthorization();
 
