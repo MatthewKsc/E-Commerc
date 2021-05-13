@@ -28,9 +28,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetProducts([FromQuery] string sort) {
+        public async Task<ActionResult> GetProducts([FromQuery] string sort ,
+            [FromQuery]int? brandId,
+            [FromQuery]int? typeId) {
 
-            var spec = new ProductWithTypesAndBrandSpecification(sort);
+            var spec = new ProductWithTypesAndBrandSpecification(sort, brandId, typeId);
 
             var products = await productsRepo.GetListWithSpec(spec);
 
