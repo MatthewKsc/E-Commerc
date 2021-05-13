@@ -28,17 +28,19 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetProducts([FromQuery] string sort ,
-            [FromQuery]int? brandId,
-            [FromQuery]int? typeId) {
+        public async Task<ActionResult> GetProducts([FromQuery] ProductSpecParams productParams) {
 
-            var spec = new ProductWithTypesAndBrandSpecification(sort, brandId, typeId);
+            var spec = new ProductWithTypesAndBrandSpecification(productParams);
+
+            var countSpec = new ProductWithFiltersCountSpecification(productParams);
+
+            var totalItems = await productsRepo.CountAsync(countSpec);
 
             var products = await productsRepo.GetListWithSpec(spec);
 
             var result = mapper.Map<IReadOnlyList<ProductDTO>>(products);
 
-            return Ok(result);
+            return Ok(new PaginationResult<ProductDTO>(productParams.PageIndex, productParams.PageSize, totalItems, result));
         }
 
         [HttpGet("{id}")]
