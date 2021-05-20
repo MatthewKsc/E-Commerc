@@ -1,7 +1,16 @@
-.btn-group {
-  width: 100%;
-}
-
 .btn {
   width: 50%;
+  height: 40px;
+}
+
+.image:hover {
+  opacity: 1;
+  & button {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.card {
+  width: 100%;
 }
