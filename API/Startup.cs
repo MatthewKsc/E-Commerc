@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using API.Middleware;
+using StackExchange.Redis;
 
 namespace API {
     public class Startup {
@@ -42,6 +43,14 @@ namespace API {
 
             services.AddDbContext<StoreContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddSingleton<ConnectionMultiplexer>(c=>{
+                var configuration = ConfigurationOptions
+                    .Parse(Configuration.GetConnectionString("Redis"),true);
+
+                return ConnectionMultiplexer.Connect(configuration);
+            });
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
