@@ -19,7 +19,7 @@ namespace API.Controllers
             this.basketRepository = basketRepository;
         }
         
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<ActionResult> GetBasketById([FromQuery] string id) {
             var basket = await basketRepository.GetBasketAsync(id);
 
@@ -33,7 +33,7 @@ namespace API.Controllers
             return Ok(updatedBasket);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<ActionResult> DeleteBasekt([FromQuery] string id) {
             await basketRepository.DeleteBasketAsync(id);
             

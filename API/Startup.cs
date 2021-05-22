@@ -45,7 +45,7 @@ namespace API {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddSingleton<ConnectionMultiplexer>(c=>{
+            services.AddSingleton<IConnectionMultiplexer>(c=>{
                 var configuration = ConfigurationOptions
                     .Parse(Configuration.GetConnectionString("Redis"),true);
 
