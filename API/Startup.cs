@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using API.Middleware;
 using StackExchange.Redis;
+using Infrastructure.Identity;
 
 namespace API {
     public class Startup {
@@ -43,6 +44,9 @@ namespace API {
 
             services.AddDbContext<StoreContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
 
             services.AddSingleton<IConnectionMultiplexer>(c=>{
