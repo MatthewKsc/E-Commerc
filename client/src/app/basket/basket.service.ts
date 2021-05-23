@@ -12,6 +12,8 @@ import { Product } from '../models/product';
 export class BasketService {
 
   baseURL = environment.apiUrl;
+  private baseUrlWithId = this.baseURL+'basket?id=';
+  private basketLocalStorage = 'basket_id';
 
   private basketSource = new BehaviorSubject<IBasket>(null);
   basket$ = this.basketSource.asObservable();
@@ -22,7 +24,7 @@ export class BasketService {
   constructor(private http: HttpClient) { }
 
   getBasket(id: string){
-    return this.http.get(this.baseURL +'basket?id='+id)
+    return this.http.get(this.baseUrlWithId + id)
       .pipe(
         map((basket: IBasket) =>{
           this.basketSource.next(basket);
@@ -40,6 +42,16 @@ export class BasketService {
     });
   }
 
+  deleteBasket(basket: IBasket) {
+    this.http.delete(this.baseUrlWithId + basket.id).subscribe(()=>{
+      this.basketSource.next(null);
+      this.basketTotalSource.next(null);
+      localStorage.removeItem(this.basketLocalStorage)
+    }, error =>{
+      console.log(error);
+    });
+  }
+
   getCurrentBasketValue(){
     return this.basketSource.value;
   }
@@ -50,6 +62,36 @@ export class BasketService {
     basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
     
     this.setBasket(basket);
+  }
+
+  incrementItemQuantity(item: BaskteItem){
+    const basket = this.getCurrentBasketValue();
+    const foundItemIndex = basket.items.findIndex(x=> x.id === item.id);
+    basket.items[foundItemIndex].quantity++;
+    this.setBasket(basket);
+  }
+
+  decrementItemQuantity(item: BaskteItem){
+    const basket = this.getCurrentBasketValue();
+    const foundItemIndex = basket.items.findIndex(x=> x.id === item.id);
+    if(basket.items[foundItemIndex].quantity> 1){
+      basket.items[foundItemIndex].quantity--;
+      this.setBasket(basket);
+    }else{
+      this.removeItemFromBasket(item);
+    }
+  }
+
+  removeItemFromBasket(item: BaskteItem) {
+    const basket = this.getCurrentBasketValue();
+    if(basket.items.some(x=> x.id === item.id)){
+      basket.items = basket.items.filter(s => s.id !== item.id);
+      if(basket.items.length>0){
+        this.setBasket(basket);
+      }else{
+        this.deleteBasket(basket);
+      }
+    }
   }
 
   private calculateTotals(){
@@ -74,7 +116,7 @@ export class BasketService {
 
   private createBaske(): IBasket {
     const basket = new Basket();
-    localStorage.setItem('basket_id', basket.id);
+    localStorage.setItem(this.basketLocalStorage, basket.id);
     return basket;
   }
 
