@@ -16,6 +16,9 @@ using Infrastructure.Data;
 using API.Middleware;
 using StackExchange.Redis;
 using Infrastructure.Identity;
+using API.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Core.Entities.Identity;
 
 namespace API {
     public class Startup {
@@ -30,11 +33,13 @@ namespace API {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddScoped<StoreContextSeed>();
+
             services.AddAutoMapper(this.GetType().Assembly);
 
             services.AddControllers();
 
             services.AddServicesToApi();
+            services.AddIdentityServices();
 
             services.AddCors(option =>
                 option.AddPolicy(CorsPolicyName, policy =>{
@@ -62,7 +67,8 @@ namespace API {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, StoreContextSeed seeder) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, StoreContextSeed seeder, UserManager<AppUser> userManager) 
+        {
 
             seeder.Seed();
 
@@ -83,6 +89,9 @@ namespace API {
             app.UseCors(CorsPolicyName);
 
             app.UseAuthorization();
+            app.UseAuthentication();
+
+            IdentitySeeder.SeedData(userManager);
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();

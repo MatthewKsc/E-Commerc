@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Identity
 {
-    public class IdentityDbContextSeeder
+    public class IdentitySeeder
     {
-        public static async Task SeedUsersAsync(UserManager<AppUser> userManager) {
+       public static void SeedData(UserManager<AppUser> userManager) {
+            SeedUser(userManager);
+       }
+
+        public static void SeedUser(UserManager<AppUser> userManager) {
             if (!userManager.Users.Any()) {
                 var user = new AppUser {
                     DisplayName = "System",
@@ -19,15 +23,18 @@ namespace Infrastructure.Identity
                     Address = new Address {
                         FirstName = "System",
                         LastName = "Sys",
-                        Street = "Comapny Street",
+                        Street = "10 The street",
                         City = "Katowice",
-                        State = "Slaske",
-                        ZipCode = "40-001",
-
+                        State = "slaskie",
+                        ZipCode = "40-001"
                     }
                 };
 
-                await userManager.CreateAsync(user, "Pa$$w0rd");
+                var result = userManager.CreateAsync(user, "Pa$$w0rd");
+
+                if (result.Result != IdentityResult.Success) {
+                    throw new Exception("Seeding Data went wrong check seeder");
+                }
             }
         }
     }
