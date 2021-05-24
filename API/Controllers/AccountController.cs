@@ -35,7 +35,32 @@ namespace API.Controllers
             if(!result.Succeeded)
                 return Unauthorized(new ApiResponse(401));
 
-            return Ok(new UserDTO { Email = user.Email, DisplayName = user.DisplayName, Token ="this will be token"}) ;
+            return Ok(new UserDTO { 
+                Email = user.Email, 
+                DisplayName = user.DisplayName, 
+                Token ="this will be token"
+             });
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult> Register(RegisterDTO register) {
+
+            var user = new AppUser { 
+                DisplayName = register.DisplayName, 
+                Email = register.Email, 
+                UserName = register.Email
+            };
+
+            var result = await userManager.CreateAsync(user, register.Password);
+
+            if(!result.Succeeded)
+                return BadRequest(new ApiResponse(400));
+
+            return Ok(new UserDTO { 
+                Email = user.Email,
+                DisplayName = user.DisplayName, 
+                Token = "this will be token" 
+            });
         }
     }
 }
