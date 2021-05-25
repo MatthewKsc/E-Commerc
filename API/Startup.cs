@@ -39,7 +39,7 @@ namespace API {
             services.AddControllers();
 
             services.AddServicesToApi();
-            services.AddIdentityServices();
+            services.AddIdentityServices(Configuration);
 
             services.AddCors(option =>
                 option.AddPolicy(CorsPolicyName, policy =>{
@@ -88,10 +88,12 @@ namespace API {
 
             app.UseCors(CorsPolicyName);
 
-            app.UseAuthorization();
             app.UseAuthentication();
 
             IdentitySeeder.SeedData(userManager);
+
+            app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
