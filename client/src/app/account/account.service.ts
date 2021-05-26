@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -12,15 +12,35 @@ import { User } from '../models/User';
 export class AccountService {
 
   baseUrl = environment.apiUrl;
-  private loginURL = this.baseUrl+'account/login';
-  private registerURL = this.baseUrl+'account/register';
-  private checkEmailURL = this.baseUrl+'account/emailexists?email=';
+  private accountURL = this.baseUrl+'account';
+  private loginURL = this.accountURL+'/login';
+  private registerURL = this.accountURL+'/register';
+  private checkEmailURL = this.accountURL+'/emailexists?email=';
   private tokenItem = 'token';
+  private tokenPrefix= 'Bearer '
 
   private currentUserSource = new BehaviorSubject<User>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient, private router: Router) { }
+
+  getCurrentUserValue(){
+    return this.currentUserSource.value;
+  }
+
+  loadCurrentUser(token: string){
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', this.tokenPrefix+token);
+
+    return this.http.get(this.accountURL, {headers}).pipe(
+      map((user:User) => {
+        if(user){
+          localStorage.setItem(this.tokenItem, user.token);
+          this.currentUserSource.next(user);
+        }
+      })
+    );
+  }
 
   login(values: any){
     return this.http.post(this.loginURL, values).pipe(
