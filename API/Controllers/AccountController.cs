@@ -105,6 +105,13 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] RegisterDTO register) {
 
+            var emailExists = await userManager.FindByEmailAsync(register.Email);
+
+            if (emailExists != null) {
+                return new BadRequestObjectResult(
+                    new ApiValidationErrorResponse { Errors = new[] { "Email address is in use" } });
+            }
+
             var user = mapper.Map<AppUser>(register);
 
             var created = await userManager.CreateAsync(user, register.Password);

@@ -25,6 +25,10 @@ namespace API
             CreateMap<AppUser, UserDTO>()
                 .ForMember(d => d.Email, s => s.MapFrom(appuser => appuser.Email));
 
+            CreateMap<CustomerBasketDTO, CustomerBasket>();
+
+            CreateMap<BasketItemDTO, BaskeItem>();
+
             CreateMap<RegisterDTO, AppUser>()
                 .ForMember(d => d.Email, s => s.MapFrom(r => r.Email))
                 .ForMember(d => d.UserName, s => s.MapFrom(r => r.Email));
