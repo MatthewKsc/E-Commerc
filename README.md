@@ -28,10 +28,10 @@ This project is mainly to practice of working with .NET with combination of Angu
 * `client` -> Angualr CLI that is providing UI to user's
 
 ## SQL Server Diagram
-![Alt text](E-Commerc/tree/master/StaticFileReadme/IdentityDB "sqlServer")
+![Alt text](StaticFileReadme/IdentityDB "sqlServer")
 <br>
 <br>
-![Alt text](E-Commerc/tree/master/StaticFileReadme/StoreDB "sqlServer")
+![Alt text](StaticFileReadme/StoreDB "sqlServer")
 <br>
 <br>
 
