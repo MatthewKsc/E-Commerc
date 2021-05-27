@@ -1,3 +1,40 @@
+# E-Commerc
+This project is mainly to practice of working with .NET with combination of Angular as UI.
+
+
+## Technologies and Tools
+
+##### Technologies
+* .Net Core
+* Entity Framework Core
+* AutoMapper
+* SQL Server
+* Angual CLI
+* Docker
+* Redis
+
+##### Tools
+* Visual Studio Code
+* MS for SQL Server
+* Postman
+* Swagger UI
+* Docker Desktop
+
+## Folders and explanation
+
+* `Api` -> Project that contains startup setting, controllers, Dtos etc.
+* `Core` -> C# library that is responsible for setting up database: Entities, Interfaces etc.
+* `Infrastructure` -> C# library that is responsible for services, configurations, seeding data etc.
+* `client` -> Angualr CLI that is providing UI to user's
+
+## SQL Server Diagram
+![Alt text](/StaticFilesReadme/IdentityDB "sqlServer")
+<br>
+<br>
+## Swagger UI
+![Alt text](/StaticFilesReadme/StoreDB "sqlServer")
+
+
 # Client
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.1.
