@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
@@ -19,16 +19,18 @@ export class AccountService {
   private tokenItem = 'token';
   private tokenPrefix= 'Bearer '
 
-  private currentUserSource = new BehaviorSubject<User>(null);
+  private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getCurrentUserValue(){
-    return this.currentUserSource.value;
-  }
-
   loadCurrentUser(token: string){
+
+    if(token === null){
+      this.currentUserSource.next(null);
+      return of(null);
+    }
+
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', this.tokenPrefix+token);
 
@@ -58,6 +60,7 @@ export class AccountService {
       map((user: User)=>{
         if(user){
           localStorage.setItem(this.tokenItem, user.token);
+          this.currentUserSource.next(user);
         }
       })
     );

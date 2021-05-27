@@ -3,21 +3,15 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
         
-            <div class="form-label-group">
-              <input formControlName="email" type="email" class="form-control" id="inputEmail" placeholder="">
-              <label for="inputEmail">Email address</label>
-            </div>
-            <div class="form-label-group">
-              <input formControlName="password" type="password" class="form-control" id="inputPassword" placeholder="">
-              <label for="inputPassword">Password</label>
-            </div>
+            <app-text-input formControlName="email" [label]="'Email Address'"></app-text-input>
+            <app-text-input formControlName="password" [label]="'Password'" [type]="'password'"></app-text-input>
         
             <div class="checkbox mb-3">
               <label>
                 <input type="checkbox" value="remember-me"> Remember me
               </label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <button [disabled]="loginForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
           </form>
     </div>
 </div>

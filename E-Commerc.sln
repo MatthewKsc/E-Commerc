@@ -36,6 +36,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C5F59F8-910B-499E-A2FD-D45192016602}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticFilesReadme", "StaticFilesReadme", "{13FA919D-6B42-4464-9A9C-2057E79954B0}"
+	ProjectSection(SolutionItems) = preProject
+		StaticFileReadme\IdentityDB.png = StaticFileReadme\IdentityDB.png
+		StaticFileReadme\StoreDB.png = StaticFileReadme\StoreDB.png
 	EndProjectSection
 EndProject
 Global
