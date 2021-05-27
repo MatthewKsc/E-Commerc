@@ -28,12 +28,12 @@ This project is mainly to practice of working with .NET with combination of Angu
 * `client` -> Angualr CLI that is providing UI to user's
 
 ## SQL Server Diagram
-![Alt text](/StaticFilesReadme/IdentityDB "sqlServer")
+![Alt text](E-Commerc/tree/master/StaticFileReadme/IdentityDB "sqlServer")
 <br>
 <br>
-## Swagger UI
-![Alt text](/StaticFilesReadme/StoreDB "sqlServer")
-
+![Alt text](E-Commerc/tree/master/StaticFileReadme/StoreDB "sqlServer")
+<br>
+<br>
 
 # Client
 
