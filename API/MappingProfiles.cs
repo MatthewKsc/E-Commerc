@@ -19,8 +19,9 @@ namespace API
                 .ForMember(d => d.PictureURL, s => s.MapFrom<ProductUrlResolver>());
 
             CreateMap<Address, AddressDTO>();
-
             CreateMap<AddressDTO, Address>();
+
+            CreateMap<AddressDTO, Core.Entities.OrderAggregate.Address>();
 
             CreateMap<AppUser, UserDTO>()
                 .ForMember(d => d.Email, s => s.MapFrom(appuser => appuser.Email));

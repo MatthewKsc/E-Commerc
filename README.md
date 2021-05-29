@@ -28,9 +28,12 @@ This project is mainly to practice of working with .NET with combination of Angu
 * `client` -> Angualr CLI that is providing UI to user's
 
 ## SQL Server Diagram
+
+##### DbStoreIdentity
 ![alt text](https://github.com/MatthewKsc/E-Commerc/blob/master/StaticFileReadme/IdentityDB.png?raw=true)
 <br>
 <br>
+##### DbStore
 ![alt text](https://github.com/MatthewKsc/E-Commerc/blob/master/StaticFileReadme/StoreDB.png?raw=true)
 <br>
 <br>
