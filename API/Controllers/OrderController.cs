@@ -42,5 +42,31 @@ namespace API.Controllers
 
             return Ok(order);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetOrdersForUser() {
+            var email = HttpContext.User.FindFirstValue(ClaimTypes.Email);
+
+            var orders = await orderService.GetOrdersForUserAsync(email);
+
+            return Ok(orders);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetOrderById([FromRoute] int id) {
+            var email = HttpContext.User.FindFirstValue(ClaimTypes.Email);
+
+            var order = await orderService.GetOrderByIdAsync(id, email);
+
+            if (order == null) return NotFound(new ApiResponse(404));
+
+            return Ok(order);
+
+        }
+
+        [HttpGet("deliveryMethods")]
+        public async Task<ActionResult> GetDDeliveryMethods() {
+            return Ok(await orderService.GetDeliveryMethodsAsync());
+        }
     }
 }
