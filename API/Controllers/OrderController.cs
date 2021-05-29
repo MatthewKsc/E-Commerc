@@ -49,7 +49,7 @@ namespace API.Controllers
 
             var orders = await orderService.GetOrdersForUserAsync(email);
 
-            return Ok(orders);
+            return Ok(mapper.Map<IReadOnlyList<OrderToReturnDTO>>(orders));
         }
 
         [HttpGet("{id}")]
@@ -60,7 +60,7 @@ namespace API.Controllers
 
             if (order == null) return NotFound(new ApiResponse(404));
 
-            return Ok(order);
+            return Ok(mapper.Map<OrderToReturnDTO>(order));
 
         }
 
