@@ -69,9 +69,11 @@ namespace API.Controllers
         [HttpPut("address")]
         [Authorize]
         public async Task<ActionResult> UpdateAddress([FromBody] AddressDTO address) {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+
             var user = await userManager.Users
                 .Include(u => u.Address)
-                .FirstOrDefaultAsync(); //needed to use this dude to Exception when using SingleOrDefault raised by .NET
+                .FirstOrDefaultAsync(x => x.Email == email); //needed to use this dude to Exception when using SingleOrDefault raised by .NET
 
             user.Address = mapper.Map<Address>(address);
 
