@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Address } from '../models/address';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -16,8 +17,9 @@ export class AccountService {
   private loginURL = this.accountURL+'/login';
   private registerURL = this.accountURL+'/register';
   private checkEmailURL = this.accountURL+'/emailexists?email=';
+  private addressURL = this.accountURL+'/address';
   private tokenItem = 'token';
-  private tokenPrefix= 'Bearer '
+  private tokenPrefix= 'Bearer ';
 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
@@ -74,5 +76,13 @@ export class AccountService {
 
   checkEmailExists(email: string){
     return this.http.get(this.checkEmailURL+email);
+  }
+
+  getUserAddress(){
+    return this.http.get(this.baseUrl+'account/address');
+  }
+
+  updateUserAddress(address: Address){
+    return this.http.put(this.addressURL, address);
   }
 }
