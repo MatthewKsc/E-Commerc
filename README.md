@@ -12,6 +12,7 @@ This project is mainly to practice of working with .NET with combination of Angu
 * Angual CLI
 * Docker
 * Redis
+* Stripe
 
 ##### Tools
 * Visual Studio Code
