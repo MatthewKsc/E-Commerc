@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BasketService } from 'src/app/basket/basket.service';
 
@@ -9,7 +10,7 @@ import { BasketService } from 'src/app/basket/basket.service';
 })
 export class CheckoutReviewComponent implements OnInit {
 
-
+  @Input() appStepper: CdkStepper;
 
   constructor(private basketService: BasketService, private toastrService: ToastrService) { }
 
@@ -20,6 +21,7 @@ export class CheckoutReviewComponent implements OnInit {
   createPaymentIntent(){
     this.basketService.createPaymentIntent().subscribe((response: any)=>{
       this.toastrService.success('Payment Intent created');
+      this.appStepper.next();
     }, error =>{
       console.log(error);
       this.toastrService.error(error.message);

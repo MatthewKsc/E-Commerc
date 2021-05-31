@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order } from 'src/app/models/order';
 
@@ -23,4 +23,7 @@ export class CheckoutSuccessComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  toOrder(){
+    this.router.navigateByUrl('/orders/'+this.order.id)
+  }
 }

@@ -31,12 +31,12 @@ export class CheckoutComponent implements OnInit {
         zipCode: [null, Validators.required]
       }),
       deliveryForm: this.fb.group({
-        deliveryMethod: [null, Validators.required]
+        deliveryMethod: [null, Validators.required] 
       }),
       paymentForm: this.fb.group({
         nameOnCard: [null, Validators.required]
       })
-    })
+    });
   }
 
   getAddressFromValues(){

@@ -10,6 +10,7 @@ import { OrderToCreate } from '../models/order';
 })
 export class CheckoutService {
 
+  OrderId: number;
   private baseUrl = environment.apiUrl;
   private deliveryUrl = this.baseUrl+'order/deliveryMethods';
 
