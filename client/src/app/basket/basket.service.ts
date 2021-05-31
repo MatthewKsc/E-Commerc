@@ -26,7 +26,22 @@ export class BasketService {
 
   constructor(private http: HttpClient) { }
 
+  createPaymentIntent(){
+    return this.http.post(this.baseURL+'payments/'+this.getCurrentBasketValue().id, {})
+    .pipe(
+      map((basket:IBasket)=>{
+        this.basketSource.next(basket);
+        console.log(this.getCurrentBasketValue());
+      })
+    );
+  }
+
   setShippingPrice(delivertMethod: DeliveryMethod){
+    const basket = this.getCurrentBasketValue();
+    basket.deliveryMethodId = delivertMethod.id;
+    basket.shippingPrice = delivertMethod.price;
+    this.setBasket(basket);
+
     this.shipping = delivertMethod.price;
     this.calculateTotals();
   }
@@ -36,6 +51,7 @@ export class BasketService {
       .pipe(
         map((basket: IBasket) =>{
           this.basketSource.next(basket);
+          this.shipping = basket.shippingPrice;
           this.calculateTotals();
         })
       );
@@ -53,7 +69,7 @@ export class BasketService {
   deleteLocalBasekt(id: string){
     this.basketSource.next(null);
     this.basketTotalSource.next(null);
-    localStorage.removeItem('basket_id');
+    localStorage.removeItem(this.basketLocalStorage);
   }
 
   deleteBasket(basket: IBasket) {
