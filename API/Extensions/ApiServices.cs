@@ -17,6 +17,8 @@ namespace API
     {
         public static IServiceCollection AddServicesToApi(this IServiceCollection services) {
 
+            services.AddSingleton<IResponseCasheService, ResponseCasheService>();
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<ITokenService, TokenService>();
