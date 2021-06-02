@@ -21,7 +21,6 @@ export class OrderDetailedComponent implements OnInit {
 
   ngOnInit(): void {
     this.orderService.getOrderDetailed(+this.route.snapshot.paramMap.get('id')).subscribe((order: Order)=>{
-      console.log(order);
       this.order = order;
       this.total = this.order.shippingPrice + this.order.subtotal;
       this.beadcrumbService.set('@OrderDetailed', `Order# ${order.id} - ${order.status}`);

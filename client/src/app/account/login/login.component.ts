@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     this.accountSerivce.login(this.loginForm.value).subscribe(()=>{
       this.route.navigateByUrl(this.returnUrl)
-      console.log('User logged in');
     }, error=>{
       console.log(error);
     });
