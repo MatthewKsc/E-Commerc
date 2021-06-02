@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using API.Helpers;
+using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace API.Controllers
             this.typeRepo = typeRepo;
         }
 
+        [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetTypes() {
 

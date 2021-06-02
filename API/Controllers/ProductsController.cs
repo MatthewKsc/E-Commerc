@@ -1,5 +1,6 @@
 ﻿using API.Dtos;
 using API.Exceptions;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -27,6 +28,7 @@ namespace API.Controllers
             this.productsRepo = productsRepo;
         }
 
+        [Cached(600)]
         [HttpGet]
         public async Task<ActionResult> GetProducts([FromQuery] ProductSpecParams productParams) {
 
@@ -43,6 +45,7 @@ namespace API.Controllers
             return Ok(new PaginationResult<ProductDTO>(productParams.PageIndex, productParams.PageSize, totalItems, result));
         }
 
+        [Cached(600)]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse),StatusCodes.Status404NotFound)]
